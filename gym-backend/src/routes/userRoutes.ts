@@ -1,12 +1,18 @@
 import { Router, Request, Response } from 'express';
-import User from '../models/User';
+import User, { UserDocument } from '../models/User';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import auth from '../middleware/auth';
+
+interface AuthRequest extends Request {
+  user?: UserDocument;
+}
 
 const router = Router();
 
 // Route d'inscription
 router.post('/register', async (req: Request, res: Response) => {
+  console.log('Register endpoint hit');
   try {
     const { username, email, password, role } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -20,6 +26,7 @@ router.post('/register', async (req: Request, res: Response) => {
 
 // Route de connexion
 router.post('/login', async (req: Request, res: Response) => {
+  console.log('Login endpoint hit');
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
@@ -28,7 +35,7 @@ router.post('/login', async (req: Request, res: Response) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
 
-    const token = jwt.sign({ id: user._id, role: user.role }, 'your_jwt_secret', { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id, role: user.role }, 'yourjwtsecret', { expiresIn: '1h' });  // Assurez-vous que 'your_jwt_secret' est correct
     res.json({ token, user });
   } catch (error) {
     res.status(400).json({ error: (error as Error).message });
@@ -86,6 +93,22 @@ router.delete('/:username', async (req: Request, res: Response) => {
     if (!deletedUser) return res.status(404).json({ msg: 'User not found' });
     res.json({ msg: 'User deleted successfully' });
   } catch (error) {
+    res.status(400).json({ error: (error as Error).message });
+  }
+});
+
+// Route pour obtenir les informations de l'utilisateur connecté
+router.get('/me', auth, async (req: AuthRequest, res: Response) => {
+  console.log('Me endpoint hit');
+  try {
+    console.log('Request user:', req.user);
+    if (!req.user) {
+      console.log('User not found in request');
+      return res.status(401).json({ msg: 'User not found' });
+    }
+    res.json(req.user);
+  } catch (error) {
+    console.log('Error in /me route:', error);
     res.status(400).json({ error: (error as Error).message });
   }
 });
