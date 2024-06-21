@@ -1,0 +1,7 @@
+-Inscriptions et connexions utilisateurs (front et back fait)
+-Gestion des membres (ajout, modification, suppression)
+-Gestion des abonnements
+-Planning des cours
+-Dashboard administrateur
+-Gestion des coachs
+-Reporting et statistiques
