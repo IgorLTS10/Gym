@@ -25,6 +25,7 @@ interface Course {
 const Schedule: React.FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [showModal, setShowModal] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [newCourse, setNewCourse] = useState<Omit<Course, '_id'>>({
     date: '',
     time: '',
@@ -51,7 +52,11 @@ const Schedule: React.FC = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setNewCourse((prevCourse) => ({ ...prevCourse, [name]: value }));
+    if (selectedCourse) {
+      setSelectedCourse({ ...selectedCourse, [name]: value } as Course);
+    } else {
+      setNewCourse((prevCourse) => ({ ...prevCourse, [name]: value }));
+    }
   };
 
   const handleAddCourse = async () => {
@@ -63,6 +68,35 @@ const Schedule: React.FC = () => {
     } catch (error) {
       console.error('Error adding course:', error);
     }
+  };
+
+  const handleUpdateCourse = async () => {
+    if (!selectedCourse) return;
+    try {
+      const response = await axios.put(`http://localhost:5000/api/cours/${selectedCourse._id}`, selectedCourse);
+      console.log('Updated course:', response.data);
+      setCourses((prevCourses) => prevCourses.map(course => course._id === selectedCourse._id ? response.data : course));
+      setShowModal(false);
+    } catch (error) {
+      console.error('Error updating course:', error);
+    }
+  };
+
+  const handleDeleteCourse = async () => {
+    if (!selectedCourse) return;
+    try {
+      await axios.delete(`http://localhost:5000/api/cours/${selectedCourse._id}`);
+      setCourses((prevCourses) => prevCourses.filter(course => course._id !== selectedCourse._id));
+      setShowModal(false);
+    } catch (error) {
+      console.error('Error deleting course:', error);
+    }
+  };
+
+  const handleSelectEvent = (event: Event) => {
+    const course = event.resource as Course;
+    setSelectedCourse(course);
+    setShowModal(true);
   };
 
   const events: Event[] = courses.map(course => {
@@ -108,6 +142,7 @@ const Schedule: React.FC = () => {
             display: 'block'
           }
         })}
+        onSelectEvent={handleSelectEvent}
         messages={{
           week: 'Semaine',
           day: 'Jour',
@@ -127,61 +162,71 @@ const Schedule: React.FC = () => {
           dayRangeHeaderFormat: ({ start, end }, culture, local) => local ? `${local.format(start, 'DD MMM', culture)} - ${local.format(end, 'DD MMM', culture)}` : '',
         }}
       />
-      <button className="add-course-button" onClick={() => setShowModal(true)}>
+      <button className="add-course-button" onClick={() => {
+        setSelectedCourse(null);
+        setShowModal(true);
+      }}>
         <FontAwesomeIcon icon={faPlus} /> Add Course
       </button>
 
       {showModal && (
         <div className="modal">
           <div className="modal-content">
-            <h3>Add New Course</h3>
+            <h3>{selectedCourse ? 'Edit Course' : 'Add New Course'}</h3>
             <input
               type="date"
               name="date"
-              value={newCourse.date}
+              value={selectedCourse ? moment(selectedCourse.date).format('YYYY-MM-DD') : newCourse.date}
               onChange={handleInputChange}
             />
             <input
               type="time"
               name="time"
-              value={newCourse.time}
+              value={selectedCourse ? selectedCourse.time : newCourse.time}
               onChange={handleInputChange}
             />
             <input
               type="text"
               name="title"
               placeholder="Course Title"
-              value={newCourse.title}
+              value={selectedCourse ? selectedCourse.title : newCourse.title}
               onChange={handleInputChange}
             />
             <input
               type="number"
               name="duration"
               placeholder="Duration (minutes)"
-              value={newCourse.duration}
+              value={selectedCourse ? selectedCourse.duration : newCourse.duration}
               onChange={handleInputChange}
             />
             <input
               type="text"
               name="coach"
               placeholder="Coach"
-              value={newCourse.coach}
+              value={selectedCourse ? selectedCourse.coach : newCourse.coach}
               onChange={handleInputChange}
             />
             <textarea
               name="description"
               placeholder="Description"
-              value={newCourse.description}
+              value={selectedCourse ? selectedCourse.description : newCourse.description}
               onChange={handleInputChange}
             />
             <input
               type="number"
               name="capacity"
               placeholder="Capacity"
-              value={newCourse.capacity}
+              value={selectedCourse ? selectedCourse.capacity : newCourse.capacity}
               onChange={handleInputChange}
             />
-            <button onClick={handleAddCourse}>Add Course</button>
+            {selectedCourse ? (
+              <>
+                <button onClick={handleUpdateCourse}>Update Course</button>
+                <button onClick={handleDeleteCourse} style={{ backgroundColor: '#dc3545', color: 'white' }}>Delete Course</button>
+              </>
+            ) : (
+              <button onClick={handleAddCourse}>Add Course</button>
+            )}
             <button onClick={() => setShowModal(false)}>Cancel</button>
           </div>
         </div>
