@@ -9,6 +9,7 @@ import Reports from './Reports';
 import Statistics from './Statistics';
 import { useAuth } from '../context/AuthContext';
 import './AdminDashboard.css';
+import AdminHistory from './AdminHistory'; // Importez AdminHistory
 
 const AdminDashboard: React.FC = () => {
   const { user } = useAuth();
@@ -31,6 +32,7 @@ const AdminDashboard: React.FC = () => {
           <Route path="coaches" element={<Coaches />} />
           <Route path="reports" element={<Reports />} />
           <Route path="statistics" element={<Statistics />} />
+          <Route path="history" element={<AdminHistory />} /> {/* Route pour AdminHistory */}
         </Routes>
       </div>
     </div>

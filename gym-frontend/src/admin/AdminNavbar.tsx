@@ -36,6 +36,11 @@ const AdminNavbar: React.FC = () => {
             Statistics
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/admin/history" className={({ isActive }) => isActive ? 'active' : undefined}>
+            History
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );
