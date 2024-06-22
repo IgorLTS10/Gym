@@ -9,6 +9,7 @@ import Header from './components/Header';
 import Subscriptions from './pages/Subscriptions';
 import { AuthProvider } from './context/AuthContext';
 import Cours from './pages/Cours';
+import About from './pages/About';
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
         <Header />
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/about" element={<About/>} />
           <Route path="/subscriptions" element={<Subscriptions />} />
           <Route path="/cours" element={<Cours />} />
           <Route path="/login" element={<LoginPage />} />

@@ -113,4 +113,30 @@ router.get('/me', auth, async (req: AuthRequest, res: Response) => {
   }
 });
 
+// Route pour obtenir tous les coachs
+router.get('/coaches', async (req: Request, res: Response) => {
+  try {
+    const coaches = await User.find({ role: 'coach' }).select('-password');
+    if (coaches.length === 0) {
+      return res.status(404).json({ msg: 'No coaches found' });
+    }
+    res.json(coaches);
+  } catch (error) {
+    res.status(400).json({ error: (error as Error).message });
+  }
+});
+
+// Route pour dégrader un coach à membre
+router.put('/:id/demote', async (req: Request, res: Response) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, { role: 'member' }, { new: true });
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(400).json({ error: (error as Error).message });
+  }
+});
+
 export default router;

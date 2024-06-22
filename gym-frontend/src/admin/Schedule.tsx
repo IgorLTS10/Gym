@@ -170,7 +170,7 @@ const Schedule: React.FC = () => {
       </button>
 
       {showModal && (
-        <div className="modal">
+        <div className={`modal ${showModal ? 'show' : ''}`}>
           <div className="modal-content">
             <h3>{selectedCourse ? 'Edit Course' : 'Add New Course'}</h3>
             <input
@@ -227,7 +227,7 @@ const Schedule: React.FC = () => {
             ) : (
               <button onClick={handleAddCourse}>Add Course</button>
             )}
-            <button onClick={() => setShowModal(false)}>Cancel</button>
+            <button className="cancel-button" onClick={() => setShowModal(false)}>Cancel</button>
           </div>
         </div>
       )}
