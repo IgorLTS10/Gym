@@ -1,6 +1,7 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose';
 
 export interface UserDocument extends Document {
+  _id: Types.ObjectId;
   username: string;
   email: string;
   password: string;
@@ -11,6 +12,13 @@ export interface UserDocument extends Document {
   age?: number;
   gender?: 'male' | 'female' | 'other';
   bio?: string;
+  subscription?: {
+    plan: string;
+    startDate: Date;
+    endDate: Date;
+    maxTrainings: number;
+    usedTrainings: number;
+  };
 }
 
 const userSchema = new Schema<UserDocument>({
@@ -24,6 +32,13 @@ const userSchema = new Schema<UserDocument>({
   age: { type: Number },
   gender: { type: String, enum: ['male', 'female', 'other'] },
   bio: { type: String },
+  subscription: {
+    plan: { type: String },
+    startDate: { type: Date },
+    endDate: { type: Date },
+    maxTrainings: { type: Number },
+    usedTrainings: { type: Number },
+  },
 });
 
 const User = model<UserDocument>('User', userSchema);

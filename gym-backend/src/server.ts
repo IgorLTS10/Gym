@@ -4,6 +4,7 @@ import cors from 'cors';
 import userRoutes from './routes/userRoutes';
 import authRoutes from './routes/authRoutes';
 import subscriptionRoutes from './routes/subscriptionRoutes';
+import coursRoutes from './routes/coursRoutes';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/api/cours', coursRoutes);
 
 // MongoDB connection
 mongoose.connect('mongodb+srv://igor:azerty@gym.yb68jhd.mongodb.net/', {

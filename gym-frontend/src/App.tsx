@@ -8,6 +8,7 @@ import NotFound from './pages/NotFound';
 import Header from './components/Header';
 import Subscriptions from './pages/Subscriptions';
 import { AuthProvider } from './context/AuthContext';
+import Cours from './pages/Cours';
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/subscriptions" element={<Subscriptions />} />
+          <Route path="/cours" element={<Cours />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/admin/*" element={<AdminDashboard />} />

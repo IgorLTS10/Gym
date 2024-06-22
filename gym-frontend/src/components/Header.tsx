@@ -9,10 +9,13 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const { user, login, logout } = useAuth();
 
-  const handleLogin = (token: string, userData: any) => {
-    localStorage.setItem('token', token);
-    login(userData);
-    setIsModalOpen(false);
+  const handleLogin = async (username: string, password: string) => {
+    try {
+      await login(username, password);
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error('Failed to login:', error);
+    }
   };
 
   const handleLogout = () => {
@@ -41,6 +44,7 @@ const Header: React.FC = () => {
             <li><Link to="#services">Services</Link></li>
             <li><Link to="#contact">Contact</Link></li>
             <li><Link to="/subscriptions">Subscriptions</Link></li>
+            <li><Link to="/cours">Cours</Link></li>
             {user && user.role === 'admin' && (
               <li><Link to="/admin">Admin Dashboard</Link></li>
             )}
