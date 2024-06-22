@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Profile.css';
+import History from '../components/History';
 
 const Profile: React.FC = () => {
   const [activeTab, setActiveTab] = useState('characteristics');
@@ -141,6 +142,8 @@ const Profile: React.FC = () => {
             </form>
           </div>
         );
+      case 'history':
+        return <History />; // Rendu du composant History
       default:
         return null;
     }
@@ -152,6 +155,7 @@ const Profile: React.FC = () => {
         <button onClick={() => setActiveTab('characteristics')}>Mes caractéristiques</button>
         <button onClick={() => setActiveTab('account')}>Compte</button>
         <button onClick={() => setActiveTab('security')}>Sécurité</button>
+        <button onClick={() => setActiveTab('history')}>Historique</button> {/* Ajout du bouton Historique */}
       </div>
       <div className="content">
         {renderContent()}

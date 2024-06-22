@@ -5,6 +5,7 @@ import userRoutes from './routes/userRoutes';
 import authRoutes from './routes/authRoutes';
 import subscriptionRoutes from './routes/subscriptionRoutes';
 import coursRoutes from './routes/coursRoutes';
+import historyRoutes from './routes/historyRoutes'; // Import des routes d'historique
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,6 +25,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
 app.use('/api/cours', coursRoutes);
+app.use('/api/history', historyRoutes); // Utilisation des routes d'historique
 
 // MongoDB connection
 mongoose.connect('mongodb+srv://igor:azerty@gym.yb68jhd.mongodb.net/', {
