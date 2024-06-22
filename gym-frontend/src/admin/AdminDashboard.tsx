@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import AdminNavbar from './AdminNavbar';
 import Members from './Members';
 import Subscriptions from './Subscriptions';
-import ClassSchedule from './ClassSchedule';
+import Schedule from './Schedule'; // Assurez-vous que l'import est correct
 import Coaches from './Coaches';
 import Reports from './Reports';
 import Statistics from './Statistics';
@@ -27,7 +27,7 @@ const AdminDashboard: React.FC = () => {
         <Routes>
           <Route path="members" element={<Members />} />
           <Route path="subscriptions" element={<Subscriptions />} />
-          <Route path="class-schedule" element={<ClassSchedule />} />
+          <Route path="schedule" element={<Schedule />} /> {/* Assurez-vous que cette route est correcte */}
           <Route path="coaches" element={<Coaches />} />
           <Route path="reports" element={<Reports />} />
           <Route path="statistics" element={<Statistics />} />
