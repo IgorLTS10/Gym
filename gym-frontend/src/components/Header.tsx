@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import AuthModal from './AuthModal';
 import { useNavigate, Link } from 'react-router-dom';
 import './Header.css';
+import { useAuth } from '../context/AuthContext';
 
 const Header: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+  const { user, login, logout } = useAuth();
 
-  const handleLogin = (token: string) => {
+  const handleLogin = (token: string, userData: any) => {
     localStorage.setItem('token', token);
-    setIsLoggedIn(true);
+    login(userData);
     setIsModalOpen(false);
   };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setIsLoggedIn(false);
+    logout();
   };
 
   const closeModal = () => {
@@ -26,13 +27,6 @@ const Header: React.FC = () => {
   const goToProfile = () => {
     navigate('/profile');
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
 
   return (
     <header className="header">
@@ -47,10 +41,13 @@ const Header: React.FC = () => {
             <li><Link to="#services">Services</Link></li>
             <li><Link to="#contact">Contact</Link></li>
             <li><Link to="/subscriptions">Subscriptions</Link></li>
+            {user && user.role === 'admin' && (
+              <li><Link to="/admin">Admin Dashboard</Link></li>
+            )}
           </ul>
         </nav>
         <div className="auth-buttons">
-          {isLoggedIn ? (
+          {user ? (
             <>
               <button onClick={handleLogout} className="auth-button">Logout</button>
               <div className="profile-icon" onClick={goToProfile}>

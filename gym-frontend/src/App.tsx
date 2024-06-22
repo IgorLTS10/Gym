@@ -1,23 +1,29 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Header from './components/Header';
 import LandingPage from './pages/LandingPage';
+import LoginPage from './pages/Login';
 import Profile from './pages/Profile';
+import AdminDashboard from './admin/AdminDashboard';
+import NotFound from './pages/NotFound';
+import Header from './components/Header';
 import Subscriptions from './pages/Subscriptions';
-import './App.css';
+import { AuthProvider } from './context/AuthContext';
 
 const App: React.FC = () => {
   return (
-    <Router>
-      <div className="App">
+    <AuthProvider>
+      <Router>
         <Header />
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/subscriptions" element={<Subscriptions />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/admin/*" element={<AdminDashboard />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
-      </div>
-    </Router>
+      </Router>
+    </AuthProvider>
   );
 };
 

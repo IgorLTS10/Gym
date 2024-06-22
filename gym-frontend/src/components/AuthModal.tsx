@@ -1,48 +1,51 @@
 import React, { useState } from 'react';
-import Modal from 'react-modal';
-import { motion } from 'framer-motion';
-import LoginForm from './LoginForm';
-import SignupForm from './SignupForm';
-import './AuthModal.css';
-
-Modal.setAppElement('#root');
+import axios from 'axios';
 
 interface AuthModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
-  onLogin: (token: string) => void;
+  onLogin: (token: string, userData: any) => void;
 }
 
 const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onRequestClose, onLogin }) => {
-  const [isLogin, setIsLogin] = useState(true);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  const switchToSignup = () => {
-    setIsLogin(false);
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/users/login', { username, password });
+      onLogin(response.data.token, response.data.user);
+      onRequestClose();
+    } catch (error) {
+      console.error('Failed to login:', error);
+    }
   };
 
-  const switchToLogin = () => {
-    setIsLogin(true);
-  };
+  if (!isOpen) return null;
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      className="modal-content"
-      overlayClassName="modal-overlay"
-    >
-      <motion.div
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        {isLogin ? (
-          <LoginForm onLogin={onLogin} onSwitchToSignup={switchToSignup} />
-        ) : (
-          <SignupForm onSwitchToLogin={switchToLogin} />
-        )}
-      </motion.div>
-    </Modal>
+    <div className="auth-modal">
+      <div className="auth-modal-content">
+        <h2>Login</h2>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleLogin();
+          }}
+        >
+          <div>
+            <label>Username</label>
+            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+          </div>
+          <div>
+            <label>Password</label>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </div>
+          <button type="submit" className="auth-button">Login</button>
+        </form>
+        <button onClick={onRequestClose} className="auth-button">Close</button>
+      </div>
+    </div>
   );
 };
 

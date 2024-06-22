@@ -1,0 +1,21 @@
+.admin-dashboard {
+    display: flex;
+    margin-top: 60px; /* Adjust based on the header height */
+  }
+  
+  .admin-navbar {
+    width: 200px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    position: fixed; /* Make the navbar fixed */
+    top: 60px; /* Adjust based on the header height */
+    height: calc(100% - 60px); /* Full height minus header height */
+    overflow-y: auto; /* Scroll if content overflows */
+  }
+  
+  .admin-content {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 220px; /* Adjust based on the navbar width */
+  }
+  

@@ -1,0 +1,23 @@
+.admin-navbar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .admin-navbar li {
+    margin: 10px 0;
+  }
+  
+  .admin-navbar a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  
+  .admin-navbar a.active {
+    font-weight: bold;
+    background-color: #007bff;
+    color: white;
+  }
+  
