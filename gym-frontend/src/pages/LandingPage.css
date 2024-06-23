@@ -1,84 +1,157 @@
-/* Landing Page Styles */
+:root {
+  --primary-color: #4caf50;
+  --secondary-color: #ff9800;
+  --background-color: #0f2027;
+  --text-color: #e0e0e0;
+  --card-background-color: #2a2a2a;
+  --transition-duration: 0.3s;
+  --hover-scale: 1.05;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+  color: var(--text-color);
+}
+
 .landing-page {
-    font-family: 'Arial', sans-serif;
-  }
-  
-  .hero {
-    background: url('https://source.unsplash.com/1600x900/?gym,fitness') no-repeat center center/cover;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #ecf0f1;
-    text-align: center;
-    position: relative;
-  }
-  
-  .hero::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-  }
-  
-  .hero-content {
-    position: relative;
-    z-index: 1;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('./gym-image.jpg') no-repeat center center/cover;
+  position: relative;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.hero-content {
+  z-index: 1;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.5rem;
+  margin-bottom: 40px;
+}
+
+.cta-button {
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color var(--transition-duration) ease, transform var(--transition-duration) ease;
+  text-decoration: none;
+}
+
+.cta-button:hover {
+  background-color: #66bb6a;
+  transform: scale(var(--hover-scale));
+}
+
+.about,
+.services,
+.contact {
+  padding: 60px 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: var(--background-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 40px;
+}
+
+.about h2,
+.services h2,
+.contact h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.services-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.service {
+  background-color: var(--card-background-color);
+  border-radius: 12px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transition: transform var(--transition-duration) ease, box-shadow var(--transition-duration) ease;
+}
+
+.service:hover {
+  transform: translateY(-10px) scale(var(--hover-scale));
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+}
+
+.service h3 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
+
+.service p {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.contact p {
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
   .hero h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-  }
-  
-  .hero p {
-    font-size: 1.25rem;
-    margin-bottom: 40px;
-  }
-  
-  .cta-button {
-    background-color: #f39c12;
-    color: #2c3e50;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 1.25rem;
-    transition: background-color 0.3s;
-  }
-  
-  .cta-button:hover {
-    background-color: #e67e22;
-  }
-  
-  .about, .services, .contact {
-    padding: 60px 20px;
-    text-align: center;
-  }
-  
-  .about h2, .services h2, .contact h2 {
     font-size: 2rem;
-    margin-bottom: 20px;
   }
-  
-  .services-container {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+
+  .hero p {
+    font-size: 1rem;
   }
-  
+
+  .cta-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+
+  .about h2,
+  .services h2,
+  .contact h2 {
+    font-size: 2rem;
+  }
+
   .service {
-    background-color: #ecf0f1;
-    padding: 20px;
-    margin: 10px;
-    border-radius: 5px;
-    width: 300px;
-    transition: transform 0.3s;
+    width: 100%;
   }
-  
-  .service:hover {
-    transform: translateY(-10px);
-  }
-  
+}

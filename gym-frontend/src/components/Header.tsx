@@ -1,22 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import AuthModal from './AuthModal';
 import { useNavigate, Link } from 'react-router-dom';
 import './Header.css';
+import { useAuth } from '../context/AuthContext';
 
 const Header: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+  const { user, login, logout } = useAuth();
 
-  const handleLogin = (token: string) => {
-    localStorage.setItem('token', token);
-    setIsLoggedIn(true);
-    setIsModalOpen(false);
+  const handleLogin = async (username: string, password: string) => {
+    try {
+      await login(username, password);
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error('Failed to login:', error);
+    }
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    setIsLoggedIn(false);
+    logout();
   };
 
   const closeModal = () => {
@@ -27,13 +30,6 @@ const Header: React.FC = () => {
     navigate('/profile');
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
   return (
     <header className="header">
       <div className="header-container">
@@ -43,14 +39,18 @@ const Header: React.FC = () => {
         <nav className="nav">
           <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="#about">About</Link></li>
-            <li><Link to="#services">Services</Link></li>
-            <li><Link to="#contact">Contact</Link></li>
+            <li><Link to="/about">About</Link></li>
+            <li><Link to="/services">Services</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
             <li><Link to="/subscriptions">Subscriptions</Link></li>
+            <li><Link to="/cours">Cours</Link></li>
+            {user && user.role === 'admin' && (
+              <li><Link to="/admin">Admin Dashboard</Link></li>
+            )}
           </ul>
         </nav>
         <div className="auth-buttons">
-          {isLoggedIn ? (
+          {user ? (
             <>
               <button onClick={handleLogout} className="auth-button">Logout</button>
               <div className="profile-icon" onClick={goToProfile}>

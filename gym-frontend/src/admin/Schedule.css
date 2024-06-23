@@ -1,0 +1,201 @@
+/* Variables pour les couleurs sombres et claires */
+:root {
+  --background-color: #121212;
+  --modal-background-color: #2a2a2a;
+  --text-color: #e0e0e0;
+  --primary-color: #4caf50;
+  --secondary-color: #ff9800;
+  --danger-color: #f44336;
+  --hover-scale: 1.05;
+  --transition-duration: 0.3s;
+  --calendar-background-color: #ffffff;
+  --calendar-text-color: #000000;
+}
+
+.schedule-container {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: var(--background-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  color: var(--text-color);
+}
+
+.schedule-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--text-color);
+  font-size: 2.5rem;
+}
+
+.add-course-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform var(--transition-duration), background-color var(--transition-duration);
+}
+
+.add-course-button:hover {
+  background-color: #388e3c;
+  transform: scale(var(--hover-scale));
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity var(--transition-duration);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background-color: var(--modal-background-color);
+  padding: 30px;
+  border-radius: 12px;
+  width: 500px;
+  max-width: 90%;
+  color: var(--text-color);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transform: translateY(-50px);
+  transition: transform var(--transition-duration), opacity var(--transition-duration);
+  opacity: 0;
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: transform var(--transition-duration);
+  box-sizing: border-box;
+}
+
+.modal-content button {
+  margin-top: 20px;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color var(--transition-duration), transform var(--transition-duration);
+  width: 100%;
+}
+
+.modal-content button:first-of-type {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.modal-content button:last-of-type {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.modal-content button:hover:first-of-type {
+  background-color: #388e3c;
+  transform: scale(var(--hover-scale));
+}
+
+.modal-content button:hover:last-of-type {
+  background-color: #d32f2f;
+  transform: scale(var(--hover-scale));
+}
+
+.modal-content button.cancel-button {
+  background-color: var(--secondary-color);
+  margin-top: 10px;
+}
+
+.modal-content button.cancel-button:hover {
+  background-color: #e65100;
+  transform: scale(var(--hover-scale));
+}
+
+/* Styles spécifiques au calendrier */
+.rbc-calendar {
+  background-color: var(--calendar-background-color);
+  color: var(--calendar-text-color);
+}
+
+.rbc-toolbar {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.rbc-toolbar button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform var(--transition-duration), background-color var(--transition-duration);
+}
+
+.rbc-toolbar button:hover {
+  background-color: #388e3c;
+  transform: scale(var(--hover-scale));
+}
+
+.rbc-toolbar .rbc-toolbar-label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 5px 10px;
+  background-color: var(--secondary-color);
+  color: var(--calendar-text-color);
+  border-radius: 4px;
+  transition: transform var(--transition-duration);
+}
+
+.rbc-toolbar .rbc-toolbar-label:hover {
+  transform: scale(var(--hover-scale));
+}
+
+.rbc-event {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 4px;
+  transition: transform var(--transition-duration);
+}
+
+.rbc-event:hover {
+  transform: scale(var(--hover-scale));
+}

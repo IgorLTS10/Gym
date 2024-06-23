@@ -1,6 +1,13 @@
 import { Router, Request, Response } from 'express';
 import Subscription from '../models/Subscription';
-import User from '../models/User';
+import User, { UserDocument } from '../models/User';
+import auth from '../middleware/auth';
+import mongoose from 'mongoose';
+
+interface AuthRequest extends Request {
+  user?: UserDocument;
+}
+
 
 const router = Router();
 
@@ -64,6 +71,41 @@ router.delete('/:id', async (req: Request, res: Response) => {
     res.json({ msg: 'Subscription deleted successfully' });
   } catch (error) {
     res.status(400).json({ error: (error as Error).message });
+  }
+});
+
+router.post('/choose', auth, async (req: AuthRequest, res: Response) => {
+  try {
+    const { plan, duration, maxTrainings } = req.body;
+    const user = await User.findById(req.user!._id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (user.subscription && new Date(user.subscription.endDate) > new Date()) {
+      return res.status(400).json({
+        message: 'You already have an active subscription',
+        plan: user.subscription.plan
+      });
+    }
+
+    const startDate = new Date();
+    const endDate = new Date();
+    endDate.setMonth(endDate.getMonth() + duration);
+
+    user.subscription = {
+      plan,
+      startDate,
+      endDate,
+      maxTrainings,
+      usedTrainings: 0
+    };
+
+    await user.save();
+    res.status(200).json({ message: 'Subscription chosen successfully', subscription: user.subscription, user });
+  } catch (error) {
+    res.status(500).json({ message: (error as Error).message });
   }
 });
 

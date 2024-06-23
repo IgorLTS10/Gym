@@ -1,0 +1,87 @@
+.cours-container {
+    padding: 120px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .cours-filters {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .cours-filters select,
+  .cours-filters input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+  }
+  
+  .cours-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1200px; /* Ajustez selon vos besoins */
+  }
+  
+  .cours-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 250px; /* Utilisation d'une largeur fixe pour éviter les problèmes de taille */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+  }
+  
+  .cours-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .cours-card h3 {
+    margin-top: 0;
+    font-size: 1.2em;
+    color: #333;
+  }
+  
+  .cours-card p {
+    margin: 10px 0;
+    font-size: 0.9em;
+    color: #666;
+  }
+  
+  .subscribe-button, .unsubscribe-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+  }
+  
+  .subscribe-button {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .unsubscribe-button {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .subscribe-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .unsubscribe-button:hover {
+    background-color: #c82333;
+  }
+  

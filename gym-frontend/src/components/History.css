@@ -1,0 +1,29 @@
+.history-container {
+    padding: 20px;
+  }
+  
+  .history-container h2 {
+    margin-bottom: 20px;
+  }
+  
+  .history-container ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .history-container li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .history-container li strong {
+    display: block;
+    font-weight: bold;
+  }
+  
+  .history-container li em {
+    display: block;
+    color: #666;
+    font-size: 0.9em;
+  }
+  

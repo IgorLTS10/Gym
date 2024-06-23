@@ -1,29 +1,46 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose';
 
 export interface UserDocument extends Document {
+  _id: Types.ObjectId;
   username: string;
   email: string;
   password: string;
-  role: 'member' | 'admin';
+  role: 'member' | 'admin' | 'coach';
   createdAt: Date;
   height?: number;
   weight?: number;
   age?: number;
   gender?: 'male' | 'female' | 'other';
   bio?: string;
+  profileImage?: string;  // Ajout du champ profileImage
+  subscription?: {
+    plan: string;
+    startDate: Date;
+    endDate: Date;
+    maxTrainings: number;
+    usedTrainings: number;
+  };
 }
 
 const userSchema = new Schema<UserDocument>({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: String, enum: ['member', 'admin'], default: 'member' },
+  role: { type: String, enum: ['member', 'admin', 'coach'], default: 'member' },
   createdAt: { type: Date, default: Date.now },
   height: { type: Number },
   weight: { type: Number },
   age: { type: Number },
   gender: { type: String, enum: ['male', 'female', 'other'] },
   bio: { type: String },
+  profileImage: { type: String },  // Ajout du champ profileImage
+  subscription: {
+    plan: { type: String },
+    startDate: { type: Date },
+    endDate: { type: Date },
+    maxTrainings: { type: Number },
+    usedTrainings: { type: Number },
+  },
 });
 
 const User = model<UserDocument>('User', userSchema);

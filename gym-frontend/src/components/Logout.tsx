@@ -1,13 +1,11 @@
 import React from 'react';
+import { useAuth } from '../context/AuthContext';
 
-interface LogoutProps {
-  onLogout: () => void;
-}
+const Logout: React.FC = () => {
+  const { logout } = useAuth();
 
-const Logout: React.FC<LogoutProps> = ({ onLogout }) => {
   const handleLogout = () => {
-    // Here you would typically handle the logout logic
-    onLogout();
+    logout();
     alert('Logged out!');
   };
 
