@@ -1,0 +1,101 @@
+.coaches-container {
+    padding: 20px;
+    color: white;
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .coaches-cards-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 1400px; /* Augmentation de la largeur maximale pour s'adapter à 4 cartes plus grandes */
+  }
+  
+  .coach-card {
+    background-color: #1abc9c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    width: 300px; /* Définition d'une largeur fixe pour chaque carte */
+    height: 400px; /* Définition d'une hauteur fixe pour chaque carte */
+    margin: 0 auto; /* Centrer chaque carte */
+  }
+  
+  .coach-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+  }
+  
+  .coach-card:hover::before {
+    opacity: 1;
+  }
+  
+  .coach-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .coach-image {
+    width: 150px; /* Augmentation de la taille de l'image */
+    height: 150px; /* Augmentation de la taille de l'image */
+    object-fit: cover;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    border: 3px solid white;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .coach-card h3 {
+    margin: 10px 0;
+    font-size: 1.4em; /* Augmentation de la taille de la police */
+    z-index: 2;
+    position: relative;
+  }
+  
+  .coach-card p {
+    font-size: 1em; /* Augmentation de la taille de la police */
+    margin: 10px 0;
+    z-index: 2;
+    position: relative;
+  }
+  
+  .coach-actions {
+    margin-top: 15px;
+    z-index: 2;
+    position: relative;
+  }
+  
+  .action-icon {
+    cursor: pointer;
+    margin: 0 10px;
+    color: white;
+    font-size: 1.5em;
+    transition: color 0.3s ease;
+  }
+  
+  .action-icon.demote:hover {
+    color: #e74c3c;
+  }
+
+ 
+  
