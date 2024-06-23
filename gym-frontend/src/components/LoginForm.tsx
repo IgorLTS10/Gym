@@ -1,26 +1,18 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 import './Form.css';
 
-interface LoginFormProps {
-  onLogin: (token: string) => void;
-  onSwitchToSignup: () => void;
-}
-
-const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onSwitchToSignup }) => {
+const LoginForm: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const { login } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/users/login', {
-        username,
-        password,
-      });
-      onLogin(response.data.token);
-      alert('Logged in successfully!');
+      await login(username, password);
+      alert('Login successful');
     } catch (err) {
       setError('Invalid credentials. Please try again.');
     }
@@ -47,7 +39,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onSwitchToSignup }) => {
         <button type="submit">Login</button>
       </form>
       {error && <p className="error">{error}</p>}
-      <p onClick={onSwitchToSignup} className="switch-link">Don't have an account? Sign Up</p>
     </div>
   );
 };

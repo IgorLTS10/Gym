@@ -26,7 +26,6 @@ router.post('/register', async (req: Request, res: Response) => {
 
 // Route de connexion
 router.post('/login', async (req: Request, res: Response) => {
-  console.log('Login endpoint hit');
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
@@ -35,7 +34,7 @@ router.post('/login', async (req: Request, res: Response) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
 
-    const token = jwt.sign({ id: user._id, role: user.role }, 'yourjwtsecret', { expiresIn: '1h' });  // Assurez-vous que 'your_jwt_secret' est correct
+    const token = jwt.sign({ id: user._id, role: user.role }, 'yourjwtsecret', { expiresIn: '1h' });
     res.json({ token, user });
   } catch (error) {
     res.status(400).json({ error: (error as Error).message });
@@ -99,16 +98,12 @@ router.delete('/:username', async (req: Request, res: Response) => {
 
 // Route pour obtenir les informations de l'utilisateur connecté
 router.get('/me', auth, async (req: AuthRequest, res: Response) => {
-  console.log('Me endpoint hit');
   try {
-    console.log('Request user:', req.user);
     if (!req.user) {
-      console.log('User not found in request');
       return res.status(401).json({ msg: 'User not found' });
     }
     res.json(req.user);
   } catch (error) {
-    console.log('Error in /me route:', error);
     res.status(400).json({ error: (error as Error).message });
   }
 });

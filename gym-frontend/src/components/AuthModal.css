@@ -1,23 +1,38 @@
-/* Auth Modal Styles */
-.modal-overlay {
-    background-color: rgba(0, 0, 0, 0.75);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .modal-content {
-    position: relative;
-    width: 100%;
-    max-width: 400px;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    outline: none;
-  }
-  
+.auth-modal {
+  background: #2a2a2a;
+  border-radius: 8px;
+  padding: 20px;
+  color: #fff;
+  width: 300px;
+  max-width: 100%;
+}
+
+.auth-modal-overlay {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.auth-modal h2 {
+  margin-top: 0;
+}
+
+.auth-modal input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 4px;
+}
+
+.auth-modal button {
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 4px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.auth-modal button:hover {
+  background: #0056b3;
+}
